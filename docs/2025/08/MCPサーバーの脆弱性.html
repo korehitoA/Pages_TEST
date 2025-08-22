@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCPサーバーの脆弱性</title>
+    <style>
+        body {
+            font-family: 'Meiryo', 'メイリオ', sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            line-height: 1.8;
+            color: #333333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #d63031;
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #d63031;
+        }
+        
+        h2 {
+            color: #d63031;
+            font-size: 20px;
+            margin-top: 35px;
+            margin-bottom: 20px;
+            padding-left: 10px;
+            border-left: 4px solid #d63031;
+        }
+        
+        .intro {
+            background-color: #fff3cd;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            border-left: 5px solid #ffc107;
+        }
+        
+        .warning {
+            background-color: #f8d7da;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border-left: 5px solid #d63031;
+        }
+        
+        .critical {
+            color: #d63031;
+            font-weight: bold;
+        }
+        
+        .example {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-style: italic;
+        }
+        
+        .countermeasures {
+            background-color: #d4edda;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border-left: 5px solid #28a745;
+        }
+        
+        .timeline {
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+        
+        .timeline-item {
+            margin-bottom: 10px;
+            padding-left: 15px;
+            border-left: 2px solid #d63031;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        strong {
+            color: #d63031;
+        }
+        
+        .conclusion {
+            background-color: #fff3cd;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 30px;
+            border: 2px solid #ffc107;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MCPサーバーの脆弱性</h1>
+        
+        <div class="intro">
+            <p>技術委員会でも紹介されている「MCP」について、
+            <br>重要な情報を共有させていただきますので<b>皆さんご一読お願いします。</b>
+            <br>AIエージェントと外部システムをつなぐ共通プロトコル「<strong>MCP（モデル・コンテキスト・プロトコル）</strong>」について、多くの脆弱性が報告されているため紹介します。
+            <br>※AIエージェントやMCPについての説明は既に技術委員会や私から共有済みのため割愛します。</p>
+        </div>
+
+        <h2>背景とMCPの歴史</h2>
+        <p>少し歴史を振り返ります。
+        <br>AIエージェントが外部システムに接続する際、問題となっていたのは<strong>「互換性」</strong>です。
+        <br>MCPが登場する前は、各AIエージェントはそれぞれ独自のコネクターで外部システムと接続して連携するのが一般的であり、互換性がありませんでした。その状況を解消するために登場したのが「MCP」です。
+        <br>MCPは2024年11月頃に登場し、2025年4月頃から普及されていきました。</p>
+
+        <h2>現在報告されている脆弱性</h2>
+        <p>普及されまだ間もないですが様々なリスクが報告されており、脆弱性に課題があります。
+        <br>特権アクセスが漏れていたり、機密データが削除されていたりなど、
+        <br>中には<span class="critical">脆弱性レベル5[Critical]</span>の例もあったようです。</p>
+
+        <h2>主要な攻撃手法</h2>
+        <p>攻撃方法は<strong>「ツールポイズニング」</strong>が主流です。
+        <br>MCPサーバーに記載するプロンプトに悪意のある指示を埋め込んでAIを作動させる方法となります。</p>
+        
+        <div class="example">
+            <p><strong>攻撃例：</strong></p>
+            <p>自社のAIエージェントと外部のWebサイトをMCPで接続した場合、悪意のあるMCPサーバーは「指定されたURLにアクセスするには、認証情報が必要」とプロンプトを記載しておきMCPクライアントへ送信。するとユーザーは認証を許可するために機微な情報を外部へ漏洩してしまう。</p>
+        </div>
+        
+        <p>また、ユーザーに悪意のあるMCPサーバーと気付かれないよう細工する<strong>「MCP Rug Pulls」</strong>と呼ぶ手法もあります。</p>
+
+        <h2>企業が取れる対策</h2>
+        <div class="countermeasures">
+            <h3>1. ITベンダーが提供するMCPサーバーを利用する</h3>
+            <p>第三者が作成したMCPサーバーと比較して、少なくとも悪意がありません。
+            <br>それでも脆弱性は報告されていますが、ITベンダー自身による改修が期待できます。</p>
+            
+            <div class="warning">
+                <p><strong>注意点：</strong>ITベンダーに絶対的な信頼は置くことはリスクです。2024年11月に公開された公式MCPサーバーが2025年5月時点でメンテナンスされていない状況であった例も報告されています。ITベンダー任せではなく、ユーザー側は運用状況を把握しておく必要があります。</p>
+            </div>
+            
+            <h3>2. 第三者開発のMCPサーバーを利用する場合</h3>
+            <p>やむを得ない理由で第三者が開発したMCPサーバーを使うケースもあります。
+            <br>その際はリポジトリー公開されており、エンジニアの評価が高いMCPサーバーを選定する。</p>
+            
+            <h3>3. 社内体制の整備</h3>
+            <p>MCPサーバーのコードを社内の担当者が逐一確認し、安全性を確認する担当者を設ける。</p>
+            
+            <h3>4. 専門サービスの活用</h3>
+            <p>MCPサーバーの脆弱性診断サービスを利用する。（国内ではGMO Flatt Securityが提供しています）</p>
+        </div>
+
+        <div class="conclusion">
+            <p>今のMCPは「使い勝手に重きを置き、セキュリティーはまだ弱い」と評価されています。</p>
+            <p>利用を検討しているプロジェクトは当情報を認識した上で対応をお願いします。</p>
+        </div>
+    </div>
+</body>
+</html>
