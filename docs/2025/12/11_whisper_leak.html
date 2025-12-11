@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whisper Leak - セキュリティ脆弱性の概要</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Yu Gothic', 'Meiryo', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+        
+        .content {
+            padding: 40px 30px;
+        }
+        
+        section {
+            margin-bottom: 35px;
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 1.6em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin: 20px 0 10px 0;
+        }
+        
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            padding-left: 10px;
+        }
+        
+        .alert-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .danger-box {
+            background: #f8d7da;
+            border-left: 5px solid #dc3545;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .info-box {
+            background: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .example {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #6c757d;
+        }
+        
+        .action-list {
+            background: #d4edda;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 5px solid #28a745;
+        }
+        
+        .action-list h3 {
+            color: #28a745;
+            margin-top: 0;
+        }
+        
+        footer {
+            background: #f8f9fa;
+            padding: 20px 30px;
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+        
+        strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            header h1 {
+                font-size: 1.6em;
+            }
+            
+            .content {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚠️ Whisper Leakについて</h1>
+            <p>AIチャットの新しいプライバシー脆弱性</p>
+        </header>
+        
+        <div class="content">
+            <section>
+                <h2>🔍 Whisper Leakとは</h2>
+                <div class="info-box">
+                    <p><strong><B>Whisper Leak</strong>は、AIチャットとの「暗号化された通信の中身」ではなく、「通信パターン(メタデータ)」から会話内容を推測されてしまう新しいプライバシー脆弱性です。</B></p>
+                </div>
+                
+                <ul>
+                    <li>Microsoftの研究チームが2025年11月上旬に発表した、AIチャットサービス(ChatGPTやGeminiなど)に対するサイドチャネル攻撃のこと</li>
+                    <li>TLSなどで内容そのものは暗号化されていても、「いつ・どれくらいの量のデータが行き来したか」といったメタデータを解析することで、会話のトピックや一部内容を推測できてしまう点が特徴<br>※暗号文のサイズから平文のサイズを推測することは可能であり、攻撃者であればデータが送られるタイミングは分かってしまう</li>
+                </ul>
+            </section>
+            
+            <section>
+                <h2>⚡ どんなときに危険か</h2>
+                <div class="danger-box">
+                    <ul>
+                        <li>インターネットサービスプロバイダ(ISP)、公共Wi-Fiの提供者、ネットワークを監視できる攻撃者などが、このメタデータを盗み見て悪用する可能性がある</li>
+                        <li>特に、個人情報や機密情報を含む業務チャットを、暗号化されているから安全だと過信して公共Wi-Fiなどから行う場合、話題やセンシティブな会話が推測されるリスクが高まる</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section>
+                <h2>📧 社員向けに伝えたいポイント</h2>
+                <div class="alert-box">
+                    <ul>
+                        <li>AIチャットは「内容」は暗号化されていても、「通信パターン」から話題やセンシティブ情報が推測され得ることが報告されている</li>
+                        <li>公共Wi-Fiや不特定多数が利用するネットワークから、業務の機密情報・個人情報を含むAIチャットを行わない</li>
+                        <li>業務で生成AIを利用する場合は、社内で定めた利用ルール(機密情報を入力しない、業務用ネットワークを使う等)を必ず守る</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section>
+                <h2>💼 具体例</h2>
+                
+                <div class="example">
+                    <h3>例1: カフェの無料Wi-Fiでの利用</h3>
+                    <p>カフェの無料Wi-Fiから、社名・顧客名・売上数字を含む文章をAIチャットに相談すると、通信パターンの解析により「特定顧客との商談内容」などが推測され、競合や第三者に事業戦略が読まれてしまう可能性がある。</p>
+                </div>
+                
+                <div class="example">
+                    <h3>例2: マンション共有Wi-Fiでの利用</h3>
+                    <p>自宅とオフィスを行き来しながら生成AIでコードレビューや設計相談をするときに、個人回線や社内VPNを使わず、マンション共有Wi-Fiをそのまま使うと、通信を監視できる第三者に会話のテーマ(脆弱性対応、特定製品名など)を推定される恐れがある。</p>
+                </div>
+            </section>
+            
+            <section>
+                <h2>✅ 社員に求める行動</h2>
+                <div class="action-list">
+                    <h3>必ず守るべきルール</h3>
+                    <ul>
+                        <li><strong>機密情報・個人情報は、どのAIチャットサービスでも「原則入力しない」</strong></li>
+                        <li><strong>やむを得ずAIを業務利用する場合は、社内が許可した環境・ネットワーク・ツールのみを使用する</strong></li>
+                        <li><strong>公共Wi-Fiなど第三者に監視され得る回線からの業務利用は避けるか、必ず会社指定のVPNを利用する</strong></li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
