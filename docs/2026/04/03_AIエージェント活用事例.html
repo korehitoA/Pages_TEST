@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeNAのPerl→Go移行事例に学ぶ、AIエージェント活用の可能性</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Kaku Gothic ProN",
+                   "Yu Gothic", Meiryo, sans-serif;
+      line-height: 1.8;
+      color: #222;
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 32px 20px 64px;
+      background: #fff;
+    }
+    h1, h2, h3 {
+      line-height: 1.4;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.4em;
+    }
+    .meta {
+      color: #666;
+      font-size: 0.95rem;
+      margin-bottom: 1.5em;
+    }
+    .lead {
+      font-size: 1.05rem;
+      background: #f7f9fc;
+      border-left: 4px solid #3b82f6;
+      padding: 16px 18px;
+      border-radius: 6px;
+    }
+    .note {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      padding: 14px 16px;
+      border-radius: 6px;
+      margin: 20px 0;
+    }
+    ul {
+      padding-left: 1.4em;
+    }
+    li {
+      margin: 0.4em 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px 12px;
+      vertical-align: top;
+    }
+    th {
+      background: #f3f4f6;
+      text-align: left;
+    }
+    .quote {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      padding: 14px 16px;
+      border-radius: 6px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <h1>DeNAのPerl→Go移行事例に学ぶ<br/>AIエージェント活用の可能性</h1>
+
+  <p class="lead">
+    DeNAは約6,000行のPerlコードをGoへ移行する作業を、AIエージェントを活用して約1カ月で完遂しました。
+    人手では半年以上かかると見込まれていた案件を短期間で形にした点は、今後の開発や技術負債解消を考えるうえで非常に重要です。
+  </p>
+
+  <h2>何が起きたのか</h2>
+  <p>
+    対象は、サーバー資産管理APIとして運用されていたPerl製システムです。
+    DeNAはこのAPIをGoへ移行し、移行後のコードは約1万行に増えました。
+    その後、約2カ月間の開発環境での稼働確認を経て、本番環境での運用を開始しています。
+  </p>
+
+  <table>
+    <tr>
+      <th>項目</th>
+      <th>内容</th>
+    </tr>
+    <tr>
+      <td>対象</td>
+      <td>Perl製のサーバー資産管理API</td>
+    </tr>
+    <tr>
+      <td>規模</td>
+      <td>約6,000行のPerlコードをGoへ移行</td>
+    </tr>
+    <tr>
+      <td>結果</td>
+      <td>Goコードは約1万行規模になった</td>
+    </tr>
+    <tr>
+      <td>工期</td>
+      <td>実作業は約1カ月、人手なら半年以上の想定</td>
+    </tr>
+    <tr>
+      <td>体制</td>
+      <td>DevinとClaude Codeの2種類のAIエージェントを使い分け</td>
+    </tr>
+  </table>
+
+  <h2>成功のポイント</h2>
+  <p>
+    ポイントは、特性の異なる2つのAIエージェントを役割分担させたことです。
+    Devinは、曖昧さの少ないタスクや大量のプルリクエスト作成、骨格実装のような作業に強みを持ちます。
+    一方でClaude Codeは、人間と対話しながら文脈を調整し、品質を高めていく用途に向いています。
+  </p>
+
+  <table>
+    <tr>
+      <th>AIエージェント</th>
+      <th>主な役割</th>
+      <th>向いている作業</th>
+    </tr>
+    <tr>
+      <td>Devin</td>
+      <td>まず80点のドラフトを素早く作る役割</td>
+      <td>曖昧さの少ないタスク、大量のPR作成、骨格実装</td>
+    </tr>
+    <tr>
+      <td>Claude Code</td>
+      <td>対話しながら90点、95点へ引き上げる役割</td>
+      <td>文脈調整、細部の改善、品質向上</td>
+    </tr>
+  </table>
+
+  <div class="quote">
+    Devinで早めに80点のドラフトを作り、Claude Codeで90点、95点へ磨き込み、最後の5%〜10%を人間が確認する、というイメージです。
+  </div>
+
+  <h2>この事例が示すこと</h2>
+  <p>
+    これまで「工数が大きすぎて着手できない」と後回しになっていた案件でも、AIを組み合わせることで現実的に前へ進められる可能性があると示されました。
+    特に、レガシー資産の移行や技術的負債の解消のような、価値は高いが時間がかかるテーマと相性がよさそうです。
+  </p>
+  <p>
+    重要なのは、AIに丸投げするのではなく、<strong>変換</strong>と<strong>検証</strong>を分けて設計した点です。
+    さらに、AIで作った成果物でも、最終的な品質確認は人間が担うという前提が明確でした。
+  </p>
+
+  <h2>社内への示唆</h2>
+  <ul>
+    <li>「時間がかかるから無理」と思っていた案件でも、AI活用で着手可能になるケースが増えそうです。</li>
+    <li>AIは万能ではなく、役割分担と人間の確認を前提にすると成果が出やすいです。</li>
+    <li>レガシー移行、テスト整備、PR作成、骨格実装などはAI活用の有力候補です。</li>
+    <li>今後は「AIをどう使うか」だけでなく、「AI時代に必要なスキルは何か」を考えることがキャリア設計にも直結します。</li>
+  </ul>
+
+  <h2>考えたいこと</h2>
+  <p>
+    世の中のニーズに対して、自分がどのスキルを伸ばすべきかを考えると、キャリアの方向性も整理しやすくなります。
+    コーディング力だけでなく、要件を分解する力、AIに適切な役割を持たせる力、結果を見極めるレビュー力がより重要になっていきそうです。
+  </p>
+  <p>
+    今回のDeNAの事例は、「AIでここまでできるのか」という驚きだけでなく、今後の仕事の進め方そのものを見直すきっかけになります。
+  </p>
+
+  <div class="note">
+    参考：DeNAは2025年10月末〜11月末にかけてこの移行を実施し、その後2026年1月末に本番稼働へ移行しています。
+  </div>
+</body>
+</html>
