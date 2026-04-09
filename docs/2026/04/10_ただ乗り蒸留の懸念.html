@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ClaudeやChatGPTをめぐるAI蒸留問題とは</title>
+<style>
+  body {
+    font-family: "Hiragino Sans", "Meiryo", sans-serif;
+    line-height: 1.8;
+    color: #222;
+    margin: 0;
+    background: #f7f9fc;
+  }
+  .container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 32px 20px 60px;
+  }
+  .hero {
+    background: linear-gradient(135deg, #0f62fe, #3c90ff);
+    color: #fff;
+    padding: 30px 24px;
+    border-radius: 16px;
+    margin-bottom: 28px;
+  }
+  .hero h1 {
+    margin: 0 0 10px;
+    font-size: 2rem;
+    font-weight: 800;
+  }
+  .hero p {
+    margin: 0;
+    font-size: 1.05rem;
+    opacity: 0.96;
+  }
+  h2 {
+    color: #0f62fe;
+    margin-top: 34px;
+    border-left: 6px solid #0f62fe;
+    padding-left: 12px;
+    font-size: 1.35rem;
+  }
+  .card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 22px 24px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    margin: 18px 0;
+  }
+  .note {
+    background: #eef5ff;
+    border-left: 5px solid #0f62fe;
+    padding: 16px 18px;
+    border-radius: 10px;
+    margin: 18px 0;
+    font-size: 1rem;
+  }
+  .warn {
+    background: #fff4f4;
+    border-left: 6px solid #d93025;
+    padding: 18px 20px;
+    border-radius: 10px;
+    margin: 18px 0;
+    font-size: 1rem;
+  }
+  .warn strong {
+    color: #d93025;
+    font-size: 1.05rem;
+  }
+  ul {
+    margin: 10px 0 0 22px;
+  }
+  li {
+    margin: 8px 0;
+  }
+  .highlight {
+    font-weight: 800;
+    color: #0f62fe;
+  }
+  .emphasis {
+    font-weight: 800;
+    color: #d93025;
+  }
+  .lead {
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+  figure {
+    margin: 24px 0;
+    text-align: center;
+  }
+  .diagram {
+    width: 100%;
+    min-height: 220px;
+    border-radius: 14px;
+    background: #ffffff;
+    border: 1px solid #d9e2f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 18px;
+    box-sizing: border-box;
+    gap: 14px;
+  }
+  .box {
+    min-width: 180px;
+    padding: 16px 18px;
+    border-radius: 12px;
+    background: #f3f7ff;
+    border: 1px solid #bfd3ff;
+    text-align: center;
+    font-weight: 700;
+  }
+  .arrow {
+    font-size: 1.6rem;
+    color: #0f62fe;
+    font-weight: 700;
+  }
+  figcaption {
+    margin-top: 10px;
+    font-size: 0.92rem;
+    color: #666;
+  }
+  .footer {
+    margin-top: 30px;
+    padding: 18px 20px;
+    background: #f0f2f5;
+    border-radius: 12px;
+    color: #333;
+  }
+  .footer strong {
+    font-size: 1.05rem;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <h1>ClaudeやChatGPTをめぐるAI蒸留問題とは</h1>
+      <p>報道ベースで整理する、中国AI企業による大規模な不正利用とその影響</p>
+    </div>
+
+    <div class="card">
+      <p class="lead">
+        2026年2月、Anthropicは中国の複数AI企業がClaudeを不正に利用し、</br>
+        <span class="highlight">自社モデルの改良に結びつく形で蒸留を行っていた</span>と公表しました。
+      </p>
+      <p>
+        報道では、中国企業の<strong>DeepSeek、Moonshot AI、MiniMax</strong> の3社が関与したとされています。</br>
+        蒸留そのものは一般に使われるAI開発手法ですが、</br>今回は
+        <span class="emphasis">利用規約や地域アクセス制限に反する形で大量利用が行われた点</span>が問題視されています。
+      </p>
+    </div>
+
+    <h2>蒸留とは何か</h2>
+    <div class="card">
+      <p>
+        <strong>蒸留（Distillation）</strong>とは、大規模モデルの出力や振る舞いを使って、
+        新しいモデルに知識や傾向を移す技術です。</br>小規模なモデルでも高い性能を目指せるため、
+        AI開発では広く使われています。
+      </p>
+      <div class="note">
+        <strong>重要：</strong>
+        <span class="highlight">蒸留そのものは一般に違法ではありません。</span></br>
+        問題になるのは、他社の商用サービスを
+        <span class="emphasis">規約違反や不正アクセスの形で大量に利用し、知識を取得すること</span>です。
+      </div>
+    </div>
+
+    <figure>
+      <div class="diagram">
+        <div class="box">大規模モデル<br>Claude / ChatGPT</div>
+        <div class="arrow">→</div>
+        <div class="box">大量の応答取得<br>推論パターン収集</div>
+        <div class="arrow">→</div>
+        <div class="box">新しいモデルへ転写<br>蒸留による改良</div>
+      </div>
+      <figcaption>図1：蒸留の基本イメージ。正当な研究用途もあるが、利用方法によっては問題となる。</figcaption>
+    </figure>
+
+    <h2>報道で伝えられた不正利用の概要</h2>
+    <div class="card">
+      <ul>
+        <li><strong>約2万4000のアカウント</strong>を通じてClaudeと<strong>1600万回以上</strong>のやり取りが行われた。</li>
+        <li><span class="emphasis">Anthropicの利用規約や地域アクセス制限に違反した可能性</span>がある。</li>
+        <li>停止されても代替アカウントがすぐ使えるような、<strong>広範なアカウントネットワーク</strong>が構築された。</li>
+        <li>Claudeの回答形式を使い、<strong>段階的な推論や説明を引き出すプロンプト</strong>が大量に送られた。</li>
+      </ul>
+    </div>
+
+    <figure>
+      <div class="diagram">
+        <div class="box">多数のアカウント</div>
+        <div class="arrow">→</div>
+        <div class="box">Claudeへ大量問い合わせ</div>
+        <div class="arrow">→</div>
+        <div class="box">応答・推論形式を収集</div>
+        <div class="arrow">→</div>
+        <div class="box">自社モデルの改良</div>
+      </div>
+      <figcaption>図2：不正利用の流れのイメージ。アカウント停止を回避しながら継続的にデータを収集したと報じられている。</figcaption>
+    </figure>
+
+    <h2>なぜ問題なのか</h2>
+    <div class="card">
+      <p>
+        AnthropicやOpenAIのような企業は、<strong>安全性や信頼性を高めるために多額の投資</strong>を行っています。
+        </br>その成果を不正な形で取り込まれると、研究開発コストに
+        <span class="emphasis">「ただ乗り」</span>されることになります。
+      </p>
+      <p>
+        また、安全対策が不十分な派生モデルが広がると、
+        危険情報への対応や悪用防止の制御が弱まり、セキュリティ面の懸念も大きくなります。
+      </p>
+    </div>
+
+    <div class="warn">
+      <strong>懸念点：</strong>
+      安全対策であるガードレールがないモデルが広がると、<span class="emphasis">サイバー攻撃支援や危険物質に関する悪用</span>など、
+      想定外のリスクを高める可能性があります。
+    </div>
+
+    <h2>日本企業への示唆</h2>
+    <div class="card">
+      <p>
+        この問題は海外の話に見えても、日本企業のAI利用やクラウド運用にも関係します。</br>
+        米中間の規制が強まると、<strong>日本のサーバーやクラウド環境が迂回経路として利用される可能性</strong>があるためです。
+      </p>
+      <p>
+        その結果、意図しない形で
+        <span class="emphasis">不正な蒸留や大量アクセスの一部に巻き込まれるリスク</span>もあります。</br>
+        したがって、AIの選定だけでなく、通信経路やアクセス監視の見直しも重要です。
+      </p>
+    </div>
+
+    <h2>求められる対応</h2>
+    <div class="card">
+      <ul>
+        <li>利用するAIサービスの提供元、利用規約、地域制限を確認する。</li>
+        <li>外部AIとの連携では、アクセスログとトラフィックの監視を強化する。</li>
+        <li>自社サーバーやクラウドの不審な利用を早期に検知できる仕組みを整える。</li>
+        <li>業務で使うAIは、安全対策やデータ取り扱い方針を含めて慎重に選定する。</li>
+      </ul>
+    </div>
+
+    <div class="footer">
+      <strong>まとめ：</strong>
+      蒸留は本来、AI開発で広く使われる技術です。ただし、今回のように
+      <span class="emphasis">規約違反や地域制限の回避を伴う形で他社サービスを大量利用する行為</span>は、
+      技術・倫理・安全保障の観点から問題となります。
+    </div>
+  </div>
+</body>
+</html>
